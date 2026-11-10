@@ -6,6 +6,7 @@ import { hhmm, useNow } from '@/lib/format';
 import { useApp } from '@/store';
 import { Shell, useMedia } from '@/ui/Shell';
 import { RelayMark } from '@/ui/art';
+import { sitePath } from '@/lib/site';
 import { Home } from '@/screens/Home';
 import { Send } from '@/screens/Send';
 import { Rent } from '@/screens/Rent';
@@ -124,7 +125,7 @@ function PhoneFrame({ children }: { children: ReactNode }) {
           ))}
         </ul>
         <div className="mt-8 flex flex-wrap gap-3 text-[14px]">
-          <a href="/" className="h-11 px-4 rounded-full bg-black text-white font-semibold inline-flex items-center">
+          <a href={sitePath()} className="h-11 px-4 rounded-full bg-black text-white font-semibold inline-flex items-center">
             Open the website →
           </a>
           <span className="h-11 px-4 rounded-full bg-white text-[#5e5e5e] inline-flex items-center">On a phone? Open this page there.</span>

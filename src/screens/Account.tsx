@@ -77,7 +77,7 @@ export function Account() {
       <Section title="About this demo">
         <p className="text-[13px] text-[#6b6b6b] leading-relaxed">
           Hackathon prototype. Drones, pilots and tracking are simulated. Waymo, Uber and other prices are estimates for comparison, and CityHop and Thames Express are made-up names. No-fly zones are illustrative (demo only) and must
-          not be used for real flight planning. Weather is live from Open-Meteo when online.
+          not be used for real flight planning. Weather is live from Open-Meteo when it answers, and a built-in estimate when it doesn’t. Postcodes fall back to bundled London districts.
         </p>
       </Section>
 
