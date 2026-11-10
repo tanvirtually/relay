@@ -11,9 +11,9 @@
 </p>
 
 <p align="center">
-  <a href="https://tanvirtually.github.io/relay/"><img src="https://img.shields.io/badge/%E2%96%B6%20Open%20Relay%20%28website%29-22C55E?style=for-the-badge" alt="Open Relay (website)" height="48"></a>
+  <a href="https://tanvirtually.github.io/relay/"><img src="docs/buttons/open-website.svg" alt="Open Relay (website)" height="52"></a>
   &nbsp;&nbsp;
-  <a href="https://tanvirtually.github.io/relay/mobile/"><img src="https://img.shields.io/badge/%F0%9F%93%B1%20Open%20Relay%20on%20your%20phone-2563EB?style=for-the-badge" alt="Open Relay on your phone" height="48"></a>
+  <a href="https://tanvirtually.github.io/relay/mobile/"><img src="docs/buttons/open-phone.svg" alt="Open Relay on your phone" height="52"></a>
 </p>
 
 <p align="center">
