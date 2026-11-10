@@ -7,18 +7,21 @@
 </p>
 
 <p align="center">
-  <a href="https://tanvirtually.github.io/relay/"><img src="https://img.shields.io/badge/live%20demo-github%20pages-111111" alt="Live demo"></a>
+  No download needed. Just tap a button to try it.
+</p>
+
+<p align="center">
+  <a href="https://tanvirtually.github.io/relay/"><img src="https://img.shields.io/badge/%E2%96%B6%20Open%20Relay%20%28website%29-22C55E?style=for-the-badge" alt="Open Relay (website)" height="48"></a>
+  &nbsp;&nbsp;
+  <a href="https://tanvirtually.github.io/relay/mobile/"><img src="https://img.shields.io/badge/%F0%9F%93%B1%20Open%20Relay%20on%20your%20phone-2563EB?style=for-the-badge" alt="Open Relay on your phone" height="48"></a>
+</p>
+
+<p align="center">
   <a href="https://github.com/tanvirtually/relay/actions/workflows/pages.yml"><img src="https://github.com/tanvirtually/relay/actions/workflows/pages.yml/badge.svg" alt="Pages deploy status"></a>
   <img src="https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white" alt="Vite">
   <img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
   <img src="https://img.shields.io/badge/MapLibre-5-396CB2?logo=maplibre&logoColor=white" alt="MapLibre">
   <img src="https://img.shields.io/badge/built%20at-ProblemDay-000000" alt="Built at ProblemDay">
-</p>
-
-<p align="center">
-  <a href="https://tanvirtually.github.io/relay/"><strong>Live demo</strong></a>
-  &nbsp;·&nbsp;
-  <a href="https://tanvirtually.github.io/relay/mobile/"><strong>Phone app</strong></a>
 </p>
 
 <p align="center">
