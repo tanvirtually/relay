@@ -7,6 +7,7 @@ import { Smartphone } from 'lucide-react';
 import { MapView } from '@/map/MapView';
 import { RelayMark } from './art';
 import { TabBar, useActiveCount } from './kit';
+import { sitePath } from '@/lib/site';
 import { OverlayRoot } from './PlacePicker';
 
 export type Layout = 'phone' | 'desktop';
@@ -73,7 +74,7 @@ function Desktop() {
         </nav>
         <div className="ml-auto flex items-center gap-3">
           <span className="text-[14px] text-[#6b6b6b] hidden xl:inline">Drone delivery across London</span>
-          <a href="/mobile/" className="h-10 px-4 rounded-full bg-[#f3f3f3] hover:bg-[#eaeaea] text-[14px] font-semibold inline-flex items-center gap-2">
+          <a href={sitePath('mobile/')} className="h-10 px-4 rounded-full bg-[#f3f3f3] hover:bg-[#eaeaea] text-[14px] font-semibold inline-flex items-center gap-2">
             <Smartphone size={16} /> Phone app
           </a>
           <NavLink to="/account" aria-label="Account" title="Account" className="w-10 h-10 rounded-full bg-black text-white grid place-items-center font-semibold">

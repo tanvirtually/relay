@@ -1,18 +1,20 @@
 import type { Weather } from '@shared/types';
 import { weatherSummary } from '@shared/weather';
+import { fetchOrUndefined } from '@/lib/net';
 
 /**
  * Live London weather from Open-Meteo (free, no key; free tier is for non-commercial use).
- * Wind at 80 m and 120 m matters most for drones. Returns undefined when offline.
+ * Wind at 80 m and 120 m matters most for drones. Returns undefined when offline;
+ * the store then uses bundled simulated weather, including on GitHub Pages.
  */
 export async function fetchLondonWeather(signal?: AbortSignal): Promise<Weather | undefined> {
   const url =
     'https://api.open-meteo.com/v1/forecast?latitude=51.5074&longitude=-0.1278' +
     '&hourly=temperature_2m,wind_speed_10m,wind_speed_80m,wind_speed_120m,wind_direction_120m,wind_gusts_10m,precipitation,visibility,weather_code' +
     '&wind_speed_unit=ms&timezone=Europe%2FLondon&forecast_days=2';
+  const res = await fetchOrUndefined(url, 6000, signal);
+  if (!res?.ok) return undefined;
   try {
-    const res = await fetch(url, { signal });
-    if (!res.ok) return undefined;
     const j = await res.json();
     const h = j.hourly;
     const times: number[] = h.time.map((t: string) => new Date(t).getTime());

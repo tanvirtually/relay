@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="220" viewBox="0 0 880 220" role="img" aria-label="Relay">
+  <rect width="880" height="220" rx="32" fill="#111111"/>
+  <rect x="48" y="48" width="124" height="124" rx="32" fill="#ffffff"/>
+  <path d="M76 82 L112 110 L76 138" fill="none" stroke="#111111" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M104 82 L140 110 L104 138" fill="none" stroke="#111111" stroke-opacity="0.35" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="204" y="118" fill="#ffffff" font-family="Inter, Helvetica, Arial, sans-serif" font-size="72" font-weight="800" letter-spacing="-2.5">Relay</text>
+  <text x="208" y="162" fill="#b5b5b5" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="500">Drone delivery and rental across London</text>
+</svg>

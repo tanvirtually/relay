@@ -1,138 +1,140 @@
-# Relay — drone delivery and drone rental across London
+<p align="center">
+  <img src="docs/relay-logo.svg" alt="Relay" width="640" />
+</p>
 
-Two things, one app:
+<p align="center">
+  Drone delivery and drone rental across London — a one-day hackathon prototype.
+</p>
 
-- **Send a parcel** across London by drone in minutes: no post office, no queue. Relay shows what Waymo, Uber and other couriers would charge for the same trip, so you can see how the drone compares.
-- **Drone rental**: a licensed pilot comes to you with a drone for aerial photos, events or a roof and gutter check. For anything else, you describe the job and get a personalised quote.
+<p align="center">
+  <a href="https://tanvirtually.github.io/relay/"><img src="https://img.shields.io/badge/live%20demo-github%20pages-111111" alt="Live demo"></a>
+  <a href="https://github.com/tanvirtually/relay/actions/workflows/pages.yml"><img src="https://github.com/tanvirtually/relay/actions/workflows/pages.yml/badge.svg" alt="Pages deploy status"></a>
+  <img src="https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white" alt="Vite">
+  <img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/MapLibre-5-396CB2?logo=maplibre&logoColor=white" alt="MapLibre">
+  <img src="https://img.shields.io/badge/built%20at-ProblemDay-000000" alt="Built at ProblemDay">
+</p>
 
-**Coming soon: charging stations.** We will have charging stations for our drones at petrol stations and EV charging stations, so that the drones will be ready to deploy whenever needed in the city.
+<p align="center">
+  <a href="https://tanvirtually.github.io/relay/"><strong>Live demo</strong></a>
+  &nbsp;·&nbsp;
+  <a href="https://tanvirtually.github.io/relay/mobile/"><strong>Phone app</strong></a>
+</p>
 
-Built for *the PROBLEM day* hackathon (31 Oct 2026). Branch `Arman-Mobile`: the people-first delivery app. The earlier operations dashboard (own fleets, warehouses, control panel) is still on `main`.
+<p align="center">
+  <img src="docs/screenshots/desktop-delivery.png" alt="Website: a drone route from Camden to Paddington, around the Regent’s Park no-fly zone, with prices next to Waymo, Uber Courier, a cargo bike and a van" width="920" />
+</p>
 
----
+<p align="center">
+  <img src="docs/screenshots/phone-frame.png" alt="Phone app at /mobile/, shown in a phone frame, with a delivery in progress" width="720" />
+</p>
 
-## Quick start
+## The problem
+
+Getting a small parcel across London still usually means a post office queue, a van, or a courier sitting in traffic. A drone can do the same trip in minutes, but only if the route stays outside no-fly zones and the wind is safe enough to fly.
+
+Relay is a rough sketch of that booking flow, built in one day. It also covers hiring a pilot and a drone for aerial photos, an event, or a roof and gutter check.
+
+## What it does
+
+- 📦 **Send a parcel** across London. Home is pre-filled; search any area or a UK postcode.
+- 🚪 **To the door, or a partner shop.** The drone lowers the parcel on a line, or a nearby corner shop holds it for collection. Collect is £1 cheaper in the demo.
+- 🗺️ **Routes around no-fly zones.** The line is the shortest path that stays outside the demo zones, with a margin. A pickup or drop inside a zone is refused.
+- 💨 **Wind check** before take-off. Too windy and the drone stays on the ground. Breezy just slows it down.
+- 💷 **Price comparison** against rough estimates for Waymo, Uber Courier, a cargo bike and a courier van.
+- 🎥 **Drone rental** with a pilot: aerial views, events, roof checks, or a job you describe (you get an estimate, then a personalised quote).
+- 🔋 **Charging stations**, marked coming soon: illustrative pads at petrol stations and EV hubs. Nothing here is a real site.
+
+<p align="center">
+  <img src="docs/screenshots/desktop-home.png" alt="Website home: send a parcel, drone rental, and shortcuts, beside a map of Camden" width="920" />
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/desktop-rental.png" alt="Drone rental options: Drone + pilot at £49 and Pro at £89, with a flight area drawn on the map" width="920" />
+</p>
+
+## How it works
+
+The same screens run as a website and as a phone app.
+
+1. You pick a pickup and a drop in London, a size, and whether it is fragile.
+2. The browser plans a route around the bundled demo airspace and tall buildings, then prices the drone and the four comparison options.
+3. Booking starts a simulated flight (about 24× faster than real time). “Demo: skip ahead” jumps to the next step.
+4. Rental follows the same idea: purpose, place, package, then a simulated pilot and flight.
+
+Screens are `Home`, `Send`, `Prices`, `Track`, `Rent`, `RentOptions`, `RentTrack`, `Coming soon`, `Activity` and `Account`. In-app links use the URL hash (`/#/send`), so a static host does not have to rewrite paths. `404.html` is a copy of the website, for a direct visit to an unknown path.
+
+The optional API on port 8787 is only there to keep future Uber Direct and Waymo keys off the browser. The booking screens do not call it. Quotes, routes, shops and rentals are computed in the page from bundled data. On GitHub Pages that is the whole app.
+
+Live weather comes from [Open-Meteo](https://open-meteo.com/) and postcodes from [postcodes.io](https://postcodes.io/) when those free services answer. If they do not, the app uses a built-in weather estimate and bundled London postcode districts. The map uses [OpenFreeMap](https://openfreemap.org/) vector tiles (no API key). If the tiles cannot be loaded, a bundled London outline is shown instead, with a simple 3D skyline.
+
+## Tech stack
+
+| Piece | What we used |
+|---|---|
+| UI | React 19, TypeScript, Tailwind 4, Vite 8 |
+| Map | MapLibre GL, deck.gl, OpenFreeMap |
+| State | Zustand (saved in the browser) |
+| Weather & places | Open-Meteo, postcodes.io, plus bundled fallbacks |
+| Optional API | Express 5 on `:8787` (not used by the static site) |
+
+## Run locally
+
+Node 20.19 or newer (22 is what `.nvmrc` pins). No API keys.
 
 ```bash
 npm install
-npm run dev          # website on http://localhost:5173 + API server on :8787
+npm run dev          # website on http://localhost:5173 and API on :8787
 ```
 
 | URL | What you get |
 |---|---|
-| http://localhost:5173/ | **Website**: booking panel on the left, big map on the right |
-| http://localhost:5173/mobile/ | **Phone app**: the same app laid out for a phone (shown in a phone frame on a laptop) |
+| http://localhost:5173/ | Website: booking panel on the left, map on the right |
+| http://localhost:5173/mobile/ | Phone app, shown in a phone frame on a laptop |
 
-To try it on a real phone, run `npm run dev:phone` and open the "Network" address Vite prints, plus `/mobile/`, on a phone on the same Wi-Fi. It can be added to the home screen like an app.
+`npm run dev:web` runs the website on its own. `npm run dev:phone` prints a network address so a phone on the same Wi-Fi can open `/mobile/`.
 
-Requires Node 20.19+ (Node 22 recommended). Everything works with **no keys at all**. Production build: `npm run build && npm start` (the API server then serves the app on :8787).
-
-## How it works
-
-The **Home** page has both services side by side, shortcuts (collect from a shop, aerial photos, event filming, roof check, something else), anything in progress and your recent activity.
-
-### Send a parcel
-
-One simple flow, the same on the website and the phone:
-
-1. **Where from, where to.** Home is pre-filled; search any London area or UK postcode.
-2. **How should it arrive?**
-   - **To the door**: the drone hovers and lowers the parcel on a line.
-   - **Collect**: a nearby partner shop (corner shop, newsagent, pharmacy…) takes it from the drone and holds it for 3 days. You pick it up later with a code. The shops show on the map and in a list (walk time, opening hours), and it's £1 cheaper.
-3. **How big is it?** Pocket (up to 300 g), Shoebox (up to 2 kg) or **Custom**. With Custom you enter length, width, height and weight, and a fit check compares each side with the drone's payload bay (45 × 35 × 25 cm, 5 kg), turned whichever way fits best.
-4. **Fragile.** The drone flies slower and won't take off in gusty air, so deliveries might take longer. The form says so under the toggle.
-5. **When.** Now, or a time slot today, tomorrow or the day after.
-6. **Prices.** The Relay drone is the option you book: price, arrival time, how much you save, and the route notes. **Waymo, Uber Courier, a cargo bike and a courier van** are shown underneath as estimates to compare.
-7. **Track it live.** The drone flies from its Relay port to you, picks up, and flies to the drop-off or shop. You get a PIN, a share link and a collection code. Demo time runs about 24× faster, and "Demo: skip ahead" jumps to the next step.
-
-### Drone rental
-
-1. **What's it for?**
-   - **Aerial view**: 15, 30 or 60 minutes in the air (£29 / £49 / £89).
-   - **Event**: weddings, parties, sport, launches. **The event length is required**, because event pilots are paid by the hour: £69/h with Drone + pilot, £119/h with Pro, plus £15 for setup. The price updates as soon as you pick the hours.
-   - **Roof & gutter check**: £59 for a house, or £89 for flats and larger buildings.
-   - **Other**: describe what you need and roughly how long. You get an estimate straight away, then a pilot sends a fixed, personalised quote, and nothing is charged until you accept it.
-2. **Where and when**: any address or postcode, as soon as possible or a time slot. The spot is checked against the no-fly zones and the wind at that time.
-3. **Choose a package**:
-   - **Drone + pilot**: a licensed pilot flies for you.
-   - **Pro**: a senior pilot, 4K kit and editing. On a roof check, Pro adds a thermal camera and a written report.
-4. **Track it**: the pilot travels to you, runs safety checks, and the drone circles the spot (at its real height in 3D). At the end you get the photos and video, the event film, or a roof report listing what was found.
-
-### Coming soon: charging stations
-
-A "Coming soon" page (in the top bar, and linked from Home) explains the plan: landing and charging pads on petrol station canopies and at EV charging hubs, so a charged drone is always nearby. The map shows 24 planned sites (12 petrol stations, 12 EV hubs, illustrative) with the area each would cover, and you can ask to be notified at launch.
-
-### The map (2D and 3D)
-
-- **No-fly zones (demo only)**: airports, restricted areas, prisons, Royal Parks, a heliport and an event zone, drawn in red and labelled. In 3D they are red volumes.
-- **Routes go around them.** The flight line is the shortest path that stays outside every zone (plus a safety margin) and away from tall buildings. Pickups or drop-offs *inside* a zone are refused, and the app offers to deliver to a shop outside the zone instead.
-- **Wind and weather**: arrows show the wind direction across the map, and a chip shows wind, gusts and whether drones can fly. Too windy grounds the drone; breezy slows it down.
-- **3D**: tilted view, 3D buildings (OpenFreeMap when online; a bundled skyline offline), with the flight line and live drone drawn at their real flying height (90 m).
-
-## Demo script (3 minutes)
-
-1. Website → **Send a parcel** → **Deliver to "Paddington"**: the line bends around Regent's Park (demo no-fly zone).
-2. **Collect** → pick a shop on the map. **Custom size** 50 × 30 × 20 cm → "Too big for the drone"; change 50 to 40 → "It fits". Turn **Fragile** on.
-3. **See prices**: the drone against Waymo and Uber. Switch to **3D**, **Book drone**, then "Demo: skip ahead" → **Ready to collect** with a code.
-4. Try **"Canary Wharf"**: the drop-off is inside a zone. Use "Collect from a shop outside the zone".
-5. **Home → Event filming**: "See options" stays disabled until you pick the event length. Pick 3 h, choose **Pro**, book, skip ahead, and watch the drone circle in **3D**.
-6. **Home → Something else?**: describe a job, then **Request a quote**. The quote arrives a few seconds later; accept it.
-7. **Coming soon**: the planned charging sites at petrol stations and EV hubs, with their coverage on the map.
-8. **Account → Demo controls → Storm**: drones are grounded. (If real London wind grounds them during a demo, pick **Calm**.)
-9. Open **/mobile/** for the phone version.
-
-## Architecture
-
-```
-src/                       React 19 + Vite + Tailwind 4 (one app, two entry points)
-  main.tsx / phone.tsx     website (/) and phone app (/mobile/)
-  App.tsx                  routes, background work (weather, order ticks), phone frame
-  store.ts                 zustand store (persisted): form, orders, saved places, settings
-  screens/                 Home, Send, Prices, Track (delivery), Rent, RentOptions, RentTrack (rental), ComingSoon, Activity, Account
-  map/                     MapView (MapLibre + deck.gl), light style, scene store
-  lib/
-    quotes.ts              drone price + comparison estimates
-    drone.ts               aircraft limits, payload bay, fit check, Relay ports
-    collect.ts             partner shops near a drop-off (demo data)
-    orders.ts              delivery simulation (dispatch → pickup → flight → drop-off)
-    rental.ts              drone rental: purposes, packages, prices, personalised quotes, pilot + flight simulation
-    stations.ts            Coming soon: planned charging sites at petrol stations and EV hubs (demo)
-    weather.ts geocode.ts  Open-Meteo, London places + postcodes.io
-  ui/                      Shell (website vs phone layout), kit, art, PlacePicker, WhenPicker
-shared/                    code used by both web and server
-  routing.ts               drone route planner (visibility graph around zones and tall buildings)
-  geo.ts weather.ts        geometry, flyability (wind, gusts, rain, temperature)
-  data/london.ts           London places, tall buildings, demo airspace
-server/                    Express 5 API (keeps keys off the browser)
-  providers/               adapter contract + Uber Direct + Waymo (partner): prepared, not connected
+```bash
+npm run build        # production build at /
+npm start            # API serves that build on :8787
+npm run build:pages  # same build, base path /relay/, for GitHub Pages
 ```
 
-## Connecting real services
+`npm run dev` is unchanged by the Pages base path. Set `VITE_BASE` only for the static deploy (`build:pages` does that).
 
-Nothing below is needed for the demo. Comparison prices are estimates until a provider is connected.
+## Try the demo
 
-### Uber (Uber Direct)
-`server/providers/uber-direct.ts` implements quote → deliver → cancel → status against the Uber Direct API (OAuth client credentials with the `eats.deliveries` scope; `POST /v1/customers/{customer_id}/delivery_quotes` and `/deliveries`). Add `UBER_DIRECT_CLIENT_ID`, `UBER_DIRECT_CLIENT_SECRET` and `UBER_DIRECT_CUSTOMER_ID` from the Direct dashboard (account approval may be needed) and check the field mapping against the docs for your account.
+1. **Send a parcel**, deliver to Paddington. The line bends around Regent’s Park (a demo no-fly zone).
+2. **See prices**, then book. “Demo: skip ahead” walks the flight.
+3. Try Canary Wharf as the drop. It sits inside a zone; the app offers a shop outside it.
+4. **Drone rental → Event filming**. Options stay disabled until you set the event length.
+5. **Account → Demo controls → Storm** grounds the drones. **Calm** clears a windy day.
 
-### Waymo
-Waymo doesn't offer a public self-serve delivery API; its London launch is a ride-hailing service. `server/providers/waymo.ts` has the same contract with placeholder calls, ready for a partner API (`WAYMO_PARTNER_API_KEY`, `WAYMO_PARTNER_BASE_URL`).
+## Limits of this prototype
 
-## Data & assumptions
+This was built in a day. Please treat it as a demo.
 
-- **No-fly zones are illustrative (demo only):** approximate airport FRZs, restricted areas, prisons, Royal Parks, a heliport and a temporary event zone. Real flights need NATS/CAA data, permissions and a qualified operator. Never use this for real flight planning.
-- **The drone** (Relay Skylift H5) is fictional: 45 × 35 × 25 cm bay, 5 kg, 55 km/h cruise (38 km/h fragile), wind limit 12 m/s (10.5 m/s fragile), 28 km range, 90 m cruise height.
-- **Partner shops** are generated near the drop-off with made-up names; closed shops can't be picked.
-- **Charging sites** (Coming soon) are planned, illustrative locations on main roads; no real petrol station or charging network is involved.
-- **Comparison prices** are estimates from typical fares. Uber's courier limit follows its published small-item rules (~15 lb / 6.8 kg). CityHop and Thames Express are fictional.
-- **Weather** comes from Open-Meteo (free for non-commercial use) and is simulated offline. Account → Demo controls overrides it.
-- Pilots, quotes, results (photos, films, roof reports), drones, tracking links and payments are simulated.
+- Drones, pilots, shops, tracking, photos, films, roof reports and payments are simulated.
+- No-fly zones are illustrative. They are not NATS or CAA data and must not be used for real flight planning.
+- The aircraft (“Relay Skylift H5”) is fictional: a 45 × 35 × 25 cm bay, 5 kg, 55 km/h, 90 m cruise.
+- Waymo and Uber prices are estimates. Those APIs are not connected. CityHop and Thames Express are made-up names.
+- Partner shops and the “coming soon” charging sites are generated or illustrative.
+- There is no licence file in this repository yet.
 
 ## Team
 
-Built collaboratively by Team T14 at PROBLEM Day
-* Arman Bayatmaku
-* Kushalini Paul
-* Mohammed Fahmy
-* Seva Kolesnik
-* Tanvir Hossain Parvin
+Built by team T14 at Problem Day.
 
+- Mohammed Fahmy
+- Kushalini Paul
+- Seva Kolesnik
+- [Arman Bayatmaku](https://github.com/ArmanBayatmaku)
+- [Tanvir Hossain Parvin](https://github.com/tanvirtally)
+
+## Acknowledgements
+
+Built at #ProblemDay, a hackathon by Kickstart Global, on 31 October 2026.
+
+This repo is a fork of [ArmanBayatmaku/Theproblemday](https://github.com/ArmanBayatmaku/Theproblemday), renamed to Relay.
+
+Map data © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, via OpenFreeMap.

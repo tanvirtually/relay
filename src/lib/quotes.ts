@@ -1,4 +1,6 @@
 // Prices. The drone is what Relay books; Waymo, Uber and the others are shown as estimates to compare.
+// All of this runs in the browser from bundled assumptions. The optional :8787 API
+// (Uber Direct / Waymo keys) is not required, and is not called on GitHub Pages.
 import type { Flyability, LngLat, Place, PriceLine, Weather } from '@shared/types';
 import { approxRoadRoute, planDroneRoute, roadSpeedKmh, type DronePlan } from '@shared/routing';
 import { DEMO_ZONES, LANDMARKS } from '@shared/data/london';

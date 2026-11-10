@@ -13,6 +13,7 @@
     "dev:web": "vite",
     "dev:api": "tsx watch server/index.ts",
     "build": "tsc --noEmit -p tsconfig.json && vite build",
+    "build:pages": "VITE_BASE=/relay/ tsc --noEmit -p tsconfig.json && VITE_BASE=/relay/ vite build",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "start": "tsx server/index.ts",
     "preview": "vite preview"
